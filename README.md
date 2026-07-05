@@ -1,6 +1,9 @@
-# FundForge
+# [FundForge](https://fund-forge.netlify.app/)
 
 FundForge is a decentralized crowdfunding platform built on the Stellar blockchain that enables creators, startups, NGOs, and innovators to raise funds transparently and securely using XLM and other custom Stellar tokens.
+
+# [Demo video](https://drive.google.com/file/d/1kEjUdYJ0kyArUjdhU0oRqZnscUn9Ry-t/view?usp=sharing)
+
 
 ## Problem Statement
 
@@ -241,26 +244,30 @@ Deploying contracts to the Stellar Testnet:
 ## Screenshots
 
 ### Wallet Connected
-![Wallet Connected Placeholder](/public/wallet_connected.png)
+
+<img width="1915" height="973" alt="image" src="https://github.com/user-attachments/assets/7430399f-c534-4b7f-bade-c4e9044a7f06" />
 
 ### Dashboard
-![Dashboard Placeholder](/public/dashboard.png)
+
+<img width="1918" height="976" alt="image" src="https://github.com/user-attachments/assets/4ef4e258-0071-4a09-b285-ff4520216d16" />
+
 
 ### Campaign Details
-![Campaign Details Placeholder](/public/campaign_details.png)
+
+<img width="1919" height="981" alt="image" src="https://github.com/user-attachments/assets/48746377-9369-4707-9aab-edc599e99cc9" />
+
 
 ### Analytics
-![Analytics Placeholder](/public/analytics.png)
 
-### Settings
-![Settings Placeholder](/public/settings.png)
+<img width="1898" height="977" alt="image" src="https://github.com/user-attachments/assets/1687126a-84c5-4ab2-ae3e-eaf102210a49" />
 
----
+### CI CD
 
-## Demo Video
-*(Link to video demonstration goes here)*
+<img width="1919" height="978" alt="image" src="https://github.com/user-attachments/assets/8e14d62b-dce1-4448-bf25-ec44a2fc3d26" />
 
 ---
+
+
 
 ## Security Considerations
 
