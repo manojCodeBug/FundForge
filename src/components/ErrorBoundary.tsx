@@ -1,6 +1,8 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
 import { ObservabilityLogger } from '../services/logger';
 
+import { MonitoringService } from '../services/monitoring';
+
 interface Props {
   children?: ReactNode;
 }
@@ -23,6 +25,7 @@ export class ErrorBoundary extends Component<Props, State> {
     ObservabilityLogger.error('Unhandled React runtime rendering error', error, {
       componentStack: errorInfo.componentStack,
     });
+    MonitoringService.trackFrontendError(error, errorInfo.componentStack || undefined);
   }
 
   public render() {
