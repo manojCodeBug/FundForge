@@ -82,6 +82,30 @@ export const Navbar: React.FC<NavbarProps> = ({ toggleTheme, isDark }) => {
             >
               Settings
             </NavLink>
+            <NavLink
+              to="/feedback"
+              className={({ isActive }) =>
+                `font-body-base text-body-base pb-1 transition-colors duration-200 ${
+                  isActive
+                    ? 'text-primary border-b-2 border-primary'
+                    : 'text-on-surface-variant hover:text-primary'
+                }`
+              }
+            >
+              Feedback
+            </NavLink>
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                `font-body-base text-body-base pb-1 transition-colors duration-200 ${
+                  isActive
+                    ? 'text-primary border-b-2 border-primary'
+                    : 'text-on-surface-variant hover:text-primary'
+                }`
+              }
+            >
+              Admin
+            </NavLink>
             {walletState.isConnected && (
               <NavLink
                 to="/wallet"
