@@ -3,6 +3,8 @@ import { StellarWalletsKit } from '@creit.tech/stellar-wallets-kit';
 import { getHorizonServer } from './stellar';
 import type { ContractEvent } from '../types';
 import { useTransactionStore } from './transactionStore';
+import { AnalyticsService } from './analytics';
+import { MonitoringService } from './monitoring';
 
 // Configurable Testnet Contract Address variables loaded from environment configurations
 export const REGISTRY_CONTRACT_ADDRESS = import.meta.env.VITE_REGISTRY_CONTRACT || 'CCGXNGQBDWTS5NRHD4ZOHUN6GL3JKSX225UWX77353V4P7LAHNHT3BPN';
@@ -101,6 +103,8 @@ export class ContractService {
         explorerLink: `https://stellar.expert/explorer/testnet/tx/${submission.hash}`,
       });
 
+      AnalyticsService.trackTransactionSuccess('create_campaign', submission.hash, { title, targetAmount });
+
       return {
         success: true,
         txHash: submission.hash,
@@ -114,6 +118,9 @@ export class ContractService {
         status: 'failed',
         error: errorMessage,
       });
+
+      MonitoringService.trackContractFailure('createCampaignOnChain', errorMessage, { userAddress, title, targetAmount });
+      AnalyticsService.trackTransactionFailure('create_campaign', errorMessage, { title, targetAmount });
       
       // Sandbox fallback if wallet/network connection fails
       if (!err.message || (!err.message.includes('not funded') && !err.message.includes('rejected'))) {
@@ -125,6 +132,8 @@ export class ContractService {
           hash: mockHash,
           explorerLink: `https://stellar.expert/explorer/testnet/tx/${mockHash}`,
         });
+
+        AnalyticsService.trackTransactionSuccess('create_campaign_simulated', mockHash, { title, targetAmount });
 
         return {
           success: true,
@@ -199,6 +208,8 @@ export class ContractService {
         explorerLink: `https://stellar.expert/explorer/testnet/tx/${submission.hash}`,
       });
 
+      AnalyticsService.trackTransactionSuccess('donate', submission.hash, { campaignTitle, amount });
+
       return {
         success: true,
         txHash: submission.hash,
@@ -213,6 +224,9 @@ export class ContractService {
         error: errorMessage,
       });
 
+      MonitoringService.trackContractFailure('donateOnChain', errorMessage, { userAddress, campaignTitle, amount });
+      AnalyticsService.trackTransactionFailure('donate', errorMessage, { campaignTitle, amount });
+
       // Sandbox fallback if wallet/network connection fails
       if (!err.message || (!err.message.includes('not funded') && !err.message.includes('rejected'))) {
         const mockHash = 'sim_' + Math.random().toString(36).substring(2, 15);
@@ -223,6 +237,8 @@ export class ContractService {
           hash: mockHash,
           explorerLink: `https://stellar.expert/explorer/testnet/tx/${mockHash}`,
         });
+
+        AnalyticsService.trackTransactionSuccess('donate_simulated', mockHash, { campaignTitle, amount });
 
         return {
           success: true,
