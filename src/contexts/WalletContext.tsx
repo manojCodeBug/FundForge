@@ -4,6 +4,8 @@ import { FreighterModule } from '@creit.tech/stellar-wallets-kit/modules/freight
 import { AlbedoModule } from '@creit.tech/stellar-wallets-kit/modules/albedo';
 import type { WalletState, WalletType } from '../types';
 import { fetchXLMBalance } from '../services/stellar';
+import { AnalyticsService } from '../services/analytics';
+import { MonitoringService } from '../services/monitoring';
 
 interface WalletContextType {
   walletState: WalletState;
@@ -88,6 +90,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       setWalletState(newState);
       localStorage.setItem('fundforge_wallet_type', type);
       localStorage.setItem('fundforge_wallet_address', address);
+      AnalyticsService.trackWalletConnected(type, address);
       
       // Fetch balance immediately
       const bal = await fetchXLMBalance(address, 'TESTNET');
@@ -107,6 +110,7 @@ export const WalletProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         friendlyError = `Please install the ${type} browser extension.`;
       }
       setError(friendlyError);
+      MonitoringService.trackWalletFailure(type || 'unknown', 'connect', friendlyError);
       return false;
     } finally {
       setIsConnecting(false);
