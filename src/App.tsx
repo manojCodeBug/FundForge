@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WalletProvider } from './contexts/WalletContext';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { WalletSelectorModal } from './components/WalletSelectorModal';
+import { OnboardingFlow } from './components/OnboardingFlow';
+import { AnalyticsService } from './services/analytics';
 
 // Pages
 import { LandingPage } from './pages/LandingPage';
@@ -15,6 +17,8 @@ import { DashboardPage } from './pages/DashboardPage';
 import { WalletCenterPage } from './pages/WalletCenterPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { FeedbackPage } from './pages/FeedbackPage';
+import { AdminAnalyticsPage } from './pages/AdminAnalyticsPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,6 +28,15 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+function PageTracker() {
+  const location = useLocation();
+  useEffect(() => {
+    const pageName = location.pathname === '/' ? 'Home' : location.pathname.substring(1);
+    AnalyticsService.trackPageView(pageName, location.pathname);
+  }, [location]);
+  return null;
+}
 
 function App() {
   const [isDark, setIsDark] = useState<boolean>(() => {
@@ -57,6 +70,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <WalletProvider>
         <Router>
+          <PageTracker />
           <div className="flex flex-col min-h-screen bg-background text-on-background selection:bg-primary selection:text-on-primary-fixed">
             <Navbar toggleTheme={toggleTheme} isDark={isDark} />
             
@@ -70,12 +84,15 @@ function App() {
                 <Route path="/wallet" element={<WalletCenterPage />} />
                 <Route path="/analytics" element={<AnalyticsPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/feedback" element={<FeedbackPage />} />
+                <Route path="/admin" element={<AdminAnalyticsPage />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
 
             <Footer />
             <WalletSelectorModal />
+            <OnboardingFlow />
           </div>
         </Router>
       </WalletProvider>
