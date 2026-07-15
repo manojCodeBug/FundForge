@@ -273,7 +273,7 @@ Deploying contracts to the Stellar Testnet:
 
 ### CI CD
 
-<img width="1919" height="978" alt="image" src="https://github.com/user-attachments/assets/8e14d62b-dce1-4448-bf25-ec44a2fc3d26" />
+<img width="1919" height="977" alt="image" src="https://github.com/user-attachments/assets/61a1eb6e-cb57-48ad-b29f-cc3660962fc2" />
 
 ---
 
